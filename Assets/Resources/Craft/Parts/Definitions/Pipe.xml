@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Part name="Pipe">
+  <PartType id="Pipe" includeInBodyDrag="true" name="Pipe" prefabPath="Assets/Resources/Craft/Parts/Prefabs/Pipe.prefab" mass="1" price="10000" partCollisions="Default" defaultMaterials="0,1,2,3,4" subpartsSharePartStyle="false" stylesShareHeader="false">
+    <Modifiers>
+      <Config autoActivateIfNoStageOrActivationGroup="true" buoyancyBaseScale="1" buoyancyUserScale="1" castShadows="true" centerOfMass="0,0,0" collisionDisconnectImpulse="1000" collisionDisconnectVelocity="15" collisionExplodeImpulse="2000" collisionExplodeVelocity="30" collisionPreventExternalDisconnections="false" collisionVelocityMode="NormalOnly" dragScale="1" dragScaleActive="1" explosiveness="0" fuelLine="false" heatShield="0" heatShieldBaseScale="1" heatShieldMass="0" heatShieldScale="-1" includeInDrag="true" inertiaTensorBaseScale="1" inertiaTensorMin="0.05" inertiaTensorUserScale="1" massScale="1" maxDamage="100" maxDrag="0" maxDragActive="0" maxTemperature="1500" occlusion="Auto" partCollisionHandling="Default" partCollisionResponse="Default" partScale="1,1,1" preventDebris="false" raiseWaterEventsEvenIfNotBuoyant="false" renderQueue="Default" stageActivationType="None" supportsActivation="false" supportsTransparency="true" thermalMassRatio="1" inspectorEnabled="true" partPropertiesEnabled="true" staticPriceAndMass="false" />
+      <ProceduralPipes.ProceduralPipe topRadius="0.25" topWeight="1" bottomRadius="0.25" bottomWeight="1" resolution="24" segmentCount="24" length="0" inspectorEnabled="true" partPropertiesEnabled="true" staticPriceAndMass="false">
+        <points length="0" />
+      </ProceduralPipes.ProceduralPipe>
+    </Modifiers>
+    <AttachPoints>
+      <AttachPoint name="AttachPoint1" displayName="Front" position="0,0,0" rotation="0,180,0" allowRotation="true" allowInvertedConnection="false" canReceive="true" canSeek="true" ignoreSurfaces="false" />
+      <AttachPoint name="AttachPoint2" displayName="Back" position="1,0,0" rotation="0,180,0" allowRotation="false" allowInvertedConnection="false" canReceive="true" canSeek="true" ignoreSurfaces="false" />
+    </AttachPoints>
+  </PartType>
+  <DesignerParts>
+    <DesignerPart name="Pipe" category="Structural" description="Basic pipe" order="0" showInDesigner="true" snapshotDistanceScaler="1" snapshotRotation="30,30,0">
+      <Assembly>
+        <Parts>
+          <Part id="1" partType="Pipe" position="0,0,0" rotation="0,0,0">
+            <Config />
+            <ProceduralPipes.ProceduralPipe>
+              <points length="0" />
+            </ProceduralPipes.ProceduralPipe>
+          </Part>
+        </Parts>
+      </Assembly>
+    </DesignerPart>
+  </DesignerParts>
+  <PartStyles />
+</Part>

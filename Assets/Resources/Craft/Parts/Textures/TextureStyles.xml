@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureStyles>
+  <TextureStyle id="Pipe1" displayName="Pipe" options="3" detailId="OIP" normalMapId="838a89e6fee709cf1e758e62b91eeb6c" detailPath="Assets/Content/Craft/Parts/Textures/Detail/OIP.jpg" normalMapPath="Assets/Content/Craft/Parts/Textures/Normal/838a89e6fee709cf1e758e62b91eeb6c.jpg" />
+</TextureStyles>
