@@ -88,13 +88,17 @@ MonoBehaviour:
     _ignoreSurfaces: 0
     _jointType: 0
     _localJointAxis: {x: 0, y: 0, z: 1}
+    _position: {x: 0, y: 0, z: 0}
     _radius: 0
     _rayCastFromCursor: 0
     _renderQueue: 0
     _requiresPhysicsJoint: 0
+    _rotation: {x: 0, y: 0, z: 0}
+    _scale: 1
     _surfaceCollider: {fileID: 0}
     _surfaceColliderName: 
     _tag: 
+    _upVectorOverride: {x: 0, y: 0, z: 0}
 --- !u!1 &2301865429189824989
 GameObject:
   m_ObjectHideFlags: 0
@@ -264,13 +268,17 @@ MonoBehaviour:
     _ignoreSurfaces: 0
     _jointType: 0
     _localJointAxis: {x: 0, y: 0, z: 1}
+    _position: {x: 0, y: 0, z: 0}
     _radius: 0
     _rayCastFromCursor: 0
     _renderQueue: 0
     _requiresPhysicsJoint: 0
+    _rotation: {x: 0, y: 0, z: 0}
+    _scale: 1
     _surfaceCollider: {fileID: 0}
     _surfaceColliderName: 
     _tag: 
+    _upVectorOverride: {x: 0, y: 0, z: 0}
 --- !u!1 &7461102531736945566
 GameObject:
   m_ObjectHideFlags: 0
@@ -320,8 +328,7 @@ MonoBehaviour:
     _displayName: Pipe
     _hidden: 0
     _id: Pipe
-    _textures:
-    - {fileID: 11400000, guid: 335370018ff66564e98696d52c7cd9c2, type: 2}
+    _textures: []
 --- !u!1 &8273111275030870682
 GameObject:
   m_ObjectHideFlags: 0
@@ -548,6 +555,38 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6100761712870636844}
     m_Modifications:
+    - target: {fileID: 4562897702423167080, guid: 18fb373a6d1dd994ea987a28a6403f58, type: 3}
+      propertyPath: Data.BackRotation.w
+      value: -0.00000004371139
+      objectReference: {fileID: 0}
+    - target: {fileID: 4562897702423167080, guid: 18fb373a6d1dd994ea987a28a6403f58, type: 3}
+      propertyPath: Data.BackRotation.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4562897702423167080, guid: 18fb373a6d1dd994ea987a28a6403f58, type: 3}
+      propertyPath: Data.FrontRotation.w
+      value: -0.00000004371139
+      objectReference: {fileID: 0}
+    - target: {fileID: 4562897702423167080, guid: 18fb373a6d1dd994ea987a28a6403f58, type: 3}
+      propertyPath: Data.FrontRotation.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4562897702423167080, guid: 18fb373a6d1dd994ea987a28a6403f58, type: 3}
+      propertyPath: Data.Curve.points.Array.data[1].z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4562897702423167080, guid: 18fb373a6d1dd994ea987a28a6403f58, type: 3}
+      propertyPath: Data.Curve.points.Array.data[2].x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4562897702423167080, guid: 18fb373a6d1dd994ea987a28a6403f58, type: 3}
+      propertyPath: Data.Curve.points.Array.data[2].z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4562897702423167080, guid: 18fb373a6d1dd994ea987a28a6403f58, type: 3}
+      propertyPath: Data.Curve.points.Array.data[3].x
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5025578983281430253, guid: 18fb373a6d1dd994ea987a28a6403f58, type: 3}
       propertyPath: m_RootOrder
       value: 0

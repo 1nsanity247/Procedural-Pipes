@@ -1,17 +1,11 @@
 namespace Assets.Scripts.Craft.Parts.Modifiers
 {
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using ModApi.Scenes.Events;
-    using Assets.Scripts.Flight.GameView.Planet;
     using ModApi.Craft.Parts;
     using ModApi.GameLoop;
     using ModApi.GameLoop.Interfaces;
     using UnityEngine;
-    using Craft.Parts.Modifiers.Fuselage;
     using ModApi.Design;
-    using static RootMotion.FinalIK.IKSolver;
 
     public class ProceduralPipeScript : PartModifierScript<ProceduralPipeData>, IDesignerStart
     {

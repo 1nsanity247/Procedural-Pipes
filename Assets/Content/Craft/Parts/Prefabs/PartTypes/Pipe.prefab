@@ -110,6 +110,8 @@ MonoBehaviour:
     _inspectorEnabled: 1
     _partPropertiesEnabled: 1
     _staticPriceAndMass: 0
+    _version: 1
+    _versionLast: 1
     _autoActivateIfNoStageOrActivationGroup: 1
     _buoyancyBaseScale: 1
     _buoyancyUserScale: 1
@@ -129,10 +131,13 @@ MonoBehaviour:
     _heatShieldBaseScale: 1
     _heatShieldMass: 0
     _heatShieldScale: -1
+    _heatShieldValidation: 1
+    _ignoreValidation: 0
     _includeInDrag: 1
     _inertiaTensorBaseScale: 1
     _inertiaTensorMin: 0.05
     _inertiaTensorUserScale: 1
+    _initialCraftNodeId: -1
     _massScale: 1
     _maxDamage: 100
     _maxDrag: 0
@@ -142,13 +147,16 @@ MonoBehaviour:
     _partCollisionHandling: 0
     _partCollisionResponse: 2
     _partScale: {x: 1, y: 1, z: 1}
+    _partSelectionEnabled: 1
     _preventDebris: 0
+    _priceScale: 1
     _raiseWaterEventsEvenIfNotBuoyant: 0
     _renderQueue: 0
     _stageActivationType: 0
     _supportsActivation: 0
     _supportsTransparency: 1
     _thermalMassRatio: 1
+    _tutorialId: 
 --- !u!114 &4562897702423167080
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -167,11 +175,21 @@ MonoBehaviour:
     _inspectorEnabled: 1
     _partPropertiesEnabled: 1
     _staticPriceAndMass: 0
-    _topRadius: 0.25
-    _topWeight: 1
-    _bottomRadius: 0.25
-    _bottomWeight: 1
+    _version: 1
+    _versionLast: 1
+    _frontRadius: 0.1
+    _frontWeight: 1
+    _backRadius: 0.1
+    _backWeight: 1
     _resolution: 24
     _segmentCount: 24
-    _points: []
-    _length: 0
+    Curve:
+      points:
+      - {x: 0, y: 0, z: 0}
+      - {x: 0, y: 0, z: 1}
+      - {x: 1, y: 0, z: 1}
+      - {x: 1, y: 0, z: 0}
+      referenceVector: {x: 0, y: 1, z: 0}
+      length: 1
+    FrontRotation: {x: 0, y: 1, z: 0, w: -0.00000004371139}
+    BackRotation: {x: 0, y: 1, z: 0, w: -0.00000004371139}

@@ -14,7 +14,7 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
     {
         [SerializeField]
         [DesignerPropertySlider(0.1f, 2f, 20, Header = "Front", Label = "Radius", Tooltip = "Radius of the front part of the pipe.")]
-        private float _frontRadius = 0.15f;
+        private float _frontRadius = 0.1f;
 
         [SerializeField]
         [DesignerPropertySlider(0.1f, 10f, 100, Label = "Weight", Tooltip = "Determines the shape of the pipe near the front.")]
@@ -22,7 +22,7 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
 
         [SerializeField]
         [DesignerPropertySlider(0.1f, 2f, 20, Header = "Back", Label = "Radius", Tooltip = "Radius of the back part of the pipe.")]
-        private float _backRadius = 0.15f;
+        private float _backRadius = 0.1f;
 
         [SerializeField]
         [DesignerPropertySlider(0.1f, 10f, 100, Label = "Weight", Tooltip = "Determines the shape of the pipe near the back.")]

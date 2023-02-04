@@ -11,3 +11,8 @@ Assets/_ModAssets_.meta
 *.sln
 *.csproj
 Assets/ModTools/*
+.vs/Procedural-Pipes/FileContentIndex/0931f26a-0e57-48a0-8c7c-6112c8a37ea2.vsidx
+*.vsidx
+*.lock
+.vs/Procedural-Pipes/v16/.suo
+.vs/Procedural-Pipes/v17/.suo
