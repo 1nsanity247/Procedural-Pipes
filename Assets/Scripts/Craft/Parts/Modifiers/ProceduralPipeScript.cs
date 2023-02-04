@@ -11,6 +11,7 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
     using UnityEngine;
     using Craft.Parts.Modifiers.Fuselage;
     using ModApi.Design;
+    using static RootMotion.FinalIK.IKSolver;
 
     public class ProceduralPipeScript : PartModifierScript<ProceduralPipeData>, IDesignerStart
     {
@@ -22,20 +23,17 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
 
             meshRoot = transform.GetChild(0);
 
-            if (Data.points.Length == 5)
-            {
-                Data.curve.points = Data.points;
-                Data.curve.referenceVector = Data.points[4];
-            }
+            if(Data.Curve == null)
+                Data.Curve = new Curve(Vector3.zero, Vector3.forward, new Vector3(1f, 0f, 1f), Vector3.right);
 
             GeneratePipeMesh();
         }
 
         public void DesignerStart(in DesignerFrameData frame)
         {
-            PartScript.ConnectedToPart += ConnectPipe;
+            PartScript.ConnectedToPart += OnPipeConnected;
 
-            UpdateAttachmentNodes();
+            UpdateAttachPoints();
         }
         
         public override void OnSymmetry(SymmetryMode mode, IPartScript originalPart, bool created)
@@ -48,62 +46,55 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
         
         public void UpdatePipeWeights()
         {
-            Data.curve.points[1] = Data.curve.points[0] + (Data.curve.points[1] - Data.curve.points[0]).normalized * Data.FrontWeight;
-            Data.curve.points[2] = Data.curve.points[3] + (Data.curve.points[2] - Data.curve.points[3]).normalized * Data.BackWeight;
-
-            if (Data.points.Length != 5)
-                Data.points = new Vector3[5];
-
-            Data.points[1] = Data.curve.points[1];
-            Data.points[2] = Data.curve.points[2];
+            Data.Curve.points[1] = Data.Curve.points[0] + (Data.Curve.points[1] - Data.Curve.points[0]).normalized * Data.FrontWeight;
+            Data.Curve.points[2] = Data.Curve.points[3] + (Data.Curve.points[2] - Data.Curve.points[3]).normalized * Data.BackWeight;
         }
 
-        public void UpdateAttachmentNodes()
+        public void UpdateAttachPoints()
         {
-            foreach (var point in Data.Part.AttachPoints)
-                point.AttachPointScript.transform.position = transform.TransformPoint(Data.curve.GetPoint((point.DisplayName == "Front")? 0:1));
+            Transform front = Data.Part.AttachPoints[0].AttachPointScript.transform;
+            front.position = transform.TransformPoint(Data.Curve.GetPoint(0.0f));
+            if (Data.FrontRotation != null)
+                front.rotation = Data.FrontRotation;
+
+            Transform back = Data.Part.AttachPoints[1].AttachPointScript.transform;
+            back.position = transform.TransformPoint(Data.Curve.GetPoint(1.0f));
+            if (Data.BackRotation != null)
+                back.rotation = Data.BackRotation;
         }
 
-        private void ConnectPipe(PartConnectedEventData e)
+        private void OnPipeConnected(PartConnectedEventData e)
         {
+            if (e.TargetAttachPoint.IsSurfaceAttachPoint) return;
+            
             AttachPointScript ps = e.ThisAttachPoint.AttachPointScript;
             AttachPointScript tps = e.TargetAttachPoint.AttachPointScript;
+            
+            bool isFront = ps.AttachPoint.DisplayName == "Front";
+            int first = isFront ? 0 : 3;
+            int second = isFront ? 1 : 2;
 
-            int first = ps.AttachPoint.DisplayName == "Front" ? 0 : 3;
-            int second = ps.AttachPoint.DisplayName == "Front" ? 1 : 2;
-
-            Data.curve.points[first] = meshRoot.InverseTransformPoint(tps.transform.position);
-            Data.curve.points[second] = meshRoot.InverseTransformPoint(tps.transform.position + Data.FrontWeight * tps.transform.forward);
+            Data.Curve.points[first] = meshRoot.InverseTransformPoint(tps.transform.position);
+            Data.Curve.points[second] = meshRoot.InverseTransformPoint(tps.transform.position + Data.FrontWeight * tps.transform.forward);
 
             Vector3 partPos = transform.position;
-            transform.position += (Vector3)(transform.localToWorldMatrix * (0.5f * (Data.curve.points[0] + Data.curve.points[3])));
+            transform.position += (Vector3)(transform.localToWorldMatrix * Data.Curve.GetPoint(0.5f));
 
             for (int i = 0; i < 4; i++)
-                Data.curve.points[i] = Data.curve.points[i] - (Vector3)(transform.worldToLocalMatrix * (transform.position - partPos));
+                Data.Curve.points[i] = Data.Curve.points[i] - (Vector3)(transform.worldToLocalMatrix * (transform.position - partPos));
 
             ps.transform.rotation = tps.transform.rotation;
             ps.transform.Rotate(new Vector3(0f, 180f, 0f), Space.Self);
 
-            Vector3 refVec = Vector3.zero;
-            Vector3 dir = (Data.curve.points[0] - Data.curve.points[3]).normalized;
+            if (isFront)
+                Data.FrontRotation = ps.transform.rotation;
+            else
+                Data.BackRotation = ps.transform.rotation;
 
-            while (refVec == Vector3.zero) { 
-                refVec = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f));
-                refVec -= Vector3.Dot(refVec, dir) * dir;
-            }
-
-            Data.curve.referenceVector = refVec;
-
-            if (Data.points.Length != 5)
-                Data.points = new Vector3[5];
-
-            for (int i = 0; i < 4; i++)
-                Data.points[i] = Data.curve.points[i];
-            Data.points[4] = Data.curve.referenceVector;
+            Data.Curve.referenceVector = Vector3.ProjectOnPlane(Random.onUnitSphere, Data.Curve.points[0] - Data.Curve.points[3]).normalized;
 
             GeneratePipeMesh();
-
-            UpdateAttachmentNodes();
+            UpdateAttachPoints();
         }
 
         public void GeneratePipeMesh()
@@ -122,7 +113,7 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
             for (int i = 0; i < Data.SegmentCount + 1; i++)
             {
                 float t = (float)i / Data.SegmentCount;
-                Data.curve.DataAtPoint(t, out center, out curveTangent, out curveNormal);
+                Data.Curve.DataAtPoint(t, out center, out curveTangent, out curveNormal);
                 curveBinormal = Vector3.Cross(curveNormal, curveTangent);
 
                 for (int x = 0; x < res; x++)
@@ -149,7 +140,7 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
             for (int i = 0; i < 2; i++)
             {
                 int currVert = vertices.Count;
-                Data.curve.DataAtPoint(i, out center, out curveTangent, out curveNormal);
+                Data.Curve.DataAtPoint(i, out center, out curveTangent, out curveNormal);
                 curveBinormal = Vector3.Cross(curveNormal, curveTangent);
 
                 vertices.Add(center);
@@ -184,17 +175,7 @@ namespace Assets.Scripts.Craft.Parts.Modifiers
             meshRoot.GetComponent<MeshFilter>().sharedMesh = mesh;
             meshRoot.GetComponent<MeshCollider>().sharedMesh = mesh;
 
-            UpdatePipeLength();
-        }
-
-        public void UpdatePipeLength()
-        {
-            float length = 0;
-
-            for (int i = 0; i < Data.SegmentCount; i++)
-                length += (Data.curve.GetPoint((i + 1) / Data.SegmentCount) - Data.curve.GetPoint(i / Data.SegmentCount)).magnitude;
-
-            Data.length = length;
+            Data.Curve.UpdateLength(Data.SegmentCount);
         }
     }
 }
