@@ -1,2 +1,2 @@
 # Procedural-Pipes
- haha pipes go brrr
+JNO mod that adds a curve based procedural pipe like part.
